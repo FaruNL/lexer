@@ -13,7 +13,6 @@ class Application(tk.Frame):
 
     def settings(self):
         self.master.title("Analizador Léxico")
-        # self.master.geometry("600x400")
         self.master.resizable(False, False)
 
     def final_area(self):
