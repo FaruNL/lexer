@@ -91,7 +91,6 @@ class Lexer:
             
             elif self.char_actual in DIGITOS:
                 tokens.append(self.__generar_numero())
-                self.__avanzar()
 
             else:
                 invalid_char = self.char_actual

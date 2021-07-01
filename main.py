@@ -34,6 +34,7 @@ class Application(tk.Frame):
 
 
         self.text_field = tk.Entry(self)
+        self.text_field.focus_set()
         self.text_field.pack(pady=5)
 
         self.button = tk.Button(self, command=self.analizar)
