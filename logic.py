@@ -95,11 +95,11 @@ class Lexer:
 
             else:
                 invalid_char = self.char_actual
+                tokens.append(Token("ERROR", self.char_actual))
                 self.__avanzar()
-                return [], CharInvalidoError("'" + invalid_char + "'")
 
 
-        return tokens, None
+        return tokens
 
     def __generar_numero(self) -> Token:
         num_str = ''
@@ -125,6 +125,4 @@ class Lexer:
 
 def run(texto):
     lexer = Lexer(texto)
-    tokens, error = lexer.lista_tokens()
-
-    return tokens, error
+    return lexer.lista_tokens()

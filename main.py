@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import logic
 
 class Application(tk.Frame):
     def __init__(self, master: tk.Tk = None):
@@ -42,7 +43,16 @@ class Application(tk.Frame):
         self.final_area()
 
     def analizar(self):
-        self.text_area.insert(tk.INSERT, "Hola")
+        self.text_area['state'] = tk.NORMAL
+        self.text_area.delete(1.0, tk.END)
+
+        texto = self.text_field.get()
+        tokens = logic.run(texto)
+
+        for i in range(len(tokens)):
+            self.text_area.insert(tk.INSERT, f'{tokens[i]}\n')
+        
+        self.text_area['state'] = tk.DISABLED
     
 if __name__ == '__main__':
     root = tk.Tk()

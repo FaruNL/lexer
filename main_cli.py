@@ -1,11 +1,9 @@
 from typing import Text
-import helper
+import logic
 
 while True:
     texto = input('> ')
-    resultado, error = helper.run(texto)
+    resultado = logic.run(texto)
 
-    if error:
-        print(error)
-    else:
-        print(resultado)
+    print(resultado)
+        
