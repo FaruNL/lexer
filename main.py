@@ -1,14 +1,17 @@
 import tkinter as tk
-from tkinter import ttk
-import logic
+import sys
+from lexer import Lexer
 
 class Application(tk.Frame):
     def __init__(self, master: tk.Tk = None):
         super().__init__(master)
         self.master: tk.Tk = master
+        self.lexer = Lexer()
+        self.lexer.build()
 
         self.settings()
         self.widgets()
+        sys.stdout = StdoutRedirector(self.text_area) # Redirigimos STDOUT al widget tk.Text
         self.pack()
 
     def settings(self):
@@ -47,14 +50,26 @@ class Application(tk.Frame):
         self.text_area.delete(1.0, tk.END)
 
         texto = self.text_field.get()
-        tokens = logic.run(texto)
+        tokens = self.lexer.run(texto)
 
-        for i in range(len(tokens)):
-            self.text_area.insert(tk.INSERT, f'{tokens[i]}\n')
+        for tok in tokens:
+            self.text_area.insert(tk.INSERT, f'{tok.type}: {tok.value}\n')
         
         self.text_area['state'] = tk.DISABLED
+    
+
+class IORedirector(object):
+    '''Una clase general para redirigir STDOUT a este widget de texto.'''
+    def __init__(self, text):
+        self.text = text
+
+class StdoutRedirector(IORedirector):
+    '''Una clase para redirigir STDOUT a este widget de texto.'''
+    def write(self, str):
+        self.text.insert(tk.INSERT, str)
     
 if __name__ == '__main__':
     root = tk.Tk()
     app = Application(root)
     app.mainloop()
+    sys.stdout = sys.__stdout__ # Detene la redirección de STDOUT
