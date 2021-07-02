@@ -6,6 +6,8 @@ class Application(tk.Frame):
     def __init__(self, master: tk.Tk = None):
         super().__init__(master)
         self.master: tk.Tk = master
+
+        # Preparamos el Lexer
         self.lexer = Lexer()
         self.lexer.build()
 
@@ -21,6 +23,7 @@ class Application(tk.Frame):
     def final_area(self):
         self.middle = tk.Frame(self)
 
+        # Text area con scrollbar vertical
         self.text_area = tk.Text(self.middle, width=60, height=15)
         self.v_scrollbar = tk.Scrollbar(self.middle, command=self.text_area.yview, orient=tk.VERTICAL)
         self.text_area.configure(yscrollcommand=self.v_scrollbar.set)
